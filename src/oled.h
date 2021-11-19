@@ -8,6 +8,11 @@
 #define OLED_H
 
 typedef struct {
+        GPIO_Type *Port;
+        uint32_t Pin;
+} OLED_Pin;
+
+typedef struct {
         uint16_t FunctionMode;
         uint16_t EntryMode;
         uint16_t FontMode;
@@ -16,11 +21,6 @@ typedef struct {
         OLED_Pin[] DB;
 
 } OLED_Typedef;
-
-typedef struct {
-        GPIO_Type *Port;
-        uint32_t Pin;
-} OLED_Pin;
 
 /**
  * Function Prototypes
