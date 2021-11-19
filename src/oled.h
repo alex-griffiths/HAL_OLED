@@ -22,6 +22,16 @@ typedef struct {
         uint32_t Pin;
 } OLED_Pin;
 
+/**
+ * Function Prototypes
+ */
+void OLED_send_byte(OLED_Typedef *oled, uint32_t byte);
+void OLED_send_command(OLED_Typedef *oled, uint32_t command);
+void OLED8_send_command(OLED_Typedef *oled, uint32_t command);
+void OLED4_send_command(OLED_Typedef *oled, uint32_t command);
+void OLED_write_str(OLED_Typedef *oled, uint8_t *str);
+void OLED_write_line(OLED_Typedef *oled, uint8_t *str);
+void OLED_move_cursor(OLED_Typedef *oled, uint16_t row, uint16_t col);
 
 /**
  * Command value definitions
@@ -56,8 +66,25 @@ typedef struct {
 #define OLED_CURSOR_NBLINK              (0x008U) // Cursor does not blink
 
 /**
- * Cursor/Display shifting
+ * Cursor/Display shifting.
+ *
+ * Display shifts do not change the Address Counter.
  */
-#define OLED_CURSOR_SHIFT_LEFT          (0x0
+#define OLED_CURSOR_SHIFT_LEFT          (0x010U) // Shifts cursor one pos left
+#define OLED_CURSOR_SHIFT_RIGHT         (0x014U) // Shifts cursor one pos right
+#define OLED_DISPLAY_SHIFT_LEFT         (0x018U) // Shift display to the left
+#define OLED_DISPLAY_SHIFT_RIGHT        (0x01CU) // Shift display to the right
+
+/**
+ * Function/Font modes
+ */
+#define OLED_MODE_8BIT                  (0x038U) 
+#define OLED_MODE_4BIT                  (0x028U)
+#define OLED_FONT_ENJP                  (0x028U) // English/Japanese
+#define OLED_FONT_WEU1                  (0x029U) // Western European #1
+#define OLED_FONT_ENRU                  (0x02AU) // English/Russian
+#define OLED_FONT_WEU2                  (0x02BU) // Western European #2
+
+// @TODO: Implement Read/Write for CGRAM and DDRAM
 
 #endif 
