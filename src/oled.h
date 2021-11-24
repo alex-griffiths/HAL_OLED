@@ -1,14 +1,15 @@
 //
 // OLED Library. Written by Alex Griffiths 2021
 //
-// This library has been tested on the Newhaven NHD-0420ZW-AY6.
+// This library has been tested on the Newhaven NHD-0420ZW-AY6 using an STM32
+// F446RE Nucleo dev board.
 //
 
 #ifndef OLED_H
 #define OLED_H
 
 typedef struct {
-        GPIO_Type *Port;
+        GPIO_TypeDef *Port;
         uint32_t Pin;
 } OLED_Pin;
 
@@ -18,20 +19,29 @@ typedef struct {
         uint16_t FontMode;
         OLED_Pin RS;
         OLED_Pin EN;
-        OLED_Pin[] DB;
+        OLED_Pin DB[8];
 
 } OLED_Typedef;
 
 /**
  * Function Prototypes
  */
-void OLED_send_byte(OLED_Typedef *oled, uint32_t byte);
+void OLED_send_byte(OLED_Typedef *oled, uint32_t byte, uint8_t np);
 void OLED_send_command(OLED_Typedef *oled, uint32_t command);
 void OLED8_send_command(OLED_Typedef *oled, uint32_t command);
 void OLED4_send_command(OLED_Typedef *oled, uint32_t command);
+void OLED_send_data(OLED_Typedef *oled, uint8_t byte);
 void OLED_write_str(OLED_Typedef *oled, uint8_t *str);
 void OLED_write_line(OLED_Typedef *oled, uint8_t *str);
 void OLED_move_cursor(OLED_Typedef *oled, uint16_t row, uint16_t col);
+void delay_us(volatile uint16_t delay);
+
+/** 
+ * GPIO Constants
+ */
+
+#define PIN_HIGH                        (0x001U)
+#define PIN_LOW                         (0x000U)
 
 /**
  * Command value definitions
